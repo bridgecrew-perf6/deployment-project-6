@@ -36,7 +36,7 @@ jobs:
           command: |-
             npm run build
       - aws-cli/install
-      - eb/setup
+      - eb/install
       - run:
           name: Deploy Server
           command: eb deploy udagram-api-dev

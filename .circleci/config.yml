@@ -5,7 +5,36 @@ orbs:
 
 
   jobs:
-      deploy:
+      deploy_frontend:
+        docker:
+          img: cimg/node:14.17
+        steps:
+        # Check for latest change to the Repo
+          -checkout
+          - restore_cache:
+          # Check to see if any dependencies is already installed
+            keys:
+              - v1-dependencies-{{checksum "package.json"}}
+              - v1-dependencies-
+          # If no package is installed then Install and Cache them
+          - run:
+              name: Install NPM dependencies
+              command: npm install
+          - save_cache:
+              paths:
+                node_modules
+              -key: v1-dependencies-{{checksum "package.json"}}
+          - run:
+              name: Building Project
+              command: npm run build
+            - aws-cli/install
+          - run:
+              name: Run Testing
+              command: npm run test
+          - run:
+              name: Deploy to AWS s3
+              command: aws s3 cp --recursive --acl public-read ./www s3://ezzhassan-udagram/
+  deploy_backend:
         docker:
           img: cimg/node:14.17
         steps:
@@ -36,4 +65,8 @@ orbs:
               command: aws s3 cp --recursive --acl public-read ./www s3://ezzhassan-udagram/
 
 
+
   workflow: build_deploy
+    jobs:
+      deploy_frontend
+      deploy_backend

@@ -31,7 +31,7 @@ jobs:
 <<<<<<< HEAD
           command: aws s3 cp --recursive --acl public-read ./www s3://ezzhassan-udagram/
 =======
-          command: aws s3 cp --recursive --acl public-read ./www $S3_BUCKET_FRONTEND
+
 >>>>>>> a122e29f5505923d1646d32e28d8fdfdac58c989
   server:
     working_directory: ~/app/udagram-api
@@ -47,8 +47,7 @@ jobs:
             npm run build
 <<<<<<< HEAD
 =======
-            printenv > www/.env
-            npm run archive
+
 >>>>>>> a122e29f5505923d1646d32e28d8fdfdac58c989
       - aws-cli/install
       - run:

@@ -5,48 +5,48 @@ orbs:
   aws-elastic-beanstalk: circleci/aws-elastic-beanstalk@2.0.1
 
 jobs:
-  frontend:
-    working_directory: ~/app/udagram/udagram-frontend
-    executor: node/default
-    steps:
-      - checkout:
-          path: ~/app
-      - node/install-packages:
-          app-dir: ~/app/udagram/udagram-frontend
-      - run:
-          name: Building Frontend Project
-          command: npm run build
-      - aws-cli/install
-      - run:
-          name: Run Testing Frontend
-          command: npm run test
-      - run:
-          name: Deploying Frontend Project
-          command: aws s3 cp --recursive --acl public-read ./www s3://ezzhassan-udagram/
-  server:
-    working_directory: ~/app/udagram/udagram-api
-    executor: node/default
-    steps:
-      - checkout:
-          path: ~/app
-      - node/install-packages:
-          app-dir: ~/app/udagram/udagram-api
-      - run:
-          name: Building Server Project
-          command: |-
-            npm run build
-      - aws-cli/install
-          docker:
-      - image: 'cimg/base:stable'
-    steps:
-      - checkout
-      - eb/setup
-      - run:
-          name: Deploy Server
-          command: |
+    frontend:
+      working_directory: ~/app/udagram/udagram-frontend
+      executor: node/default
+      steps:
+        - checkout:
+            path: ~/app
+        - node/install-packages:
+            app-dir: ~/app/udagram/udagram-frontend
+        - run:
+            name: Building Frontend Project
+            command: npm run build
+        - aws-cli/install
+        - run:
+            name: Run Testing Frontend
+            command: npm run test
+        - run:
+            name: Deploying Frontend Project
+            command: aws s3 cp --recursive --acl public-read ./www s3://ezzhassan-udagram/
+    server:
+      working_directory: ~/app/udagram/udagram-api
+      executor: node/default
+      steps:
+        - checkout:
+            path: ~/app
+        - node/install-packages:
+            app-dir: ~/app/udagram/udagram-api
+        - run:
+            name: Building Server Project
+            command: |-
+              npm run build
+        - aws-cli/install
+  docker:
+    - image: 'cimg/base:stable'
+      steps:
+        - checkout
+        - eb/setup
+        - run:
+            name: Deploy Server
+            command: |
 
-            eb deploy udagram-api-dev
-            eb status
+              eb deploy udagram-api-dev
+              eb status
 
 
 workflows:

@@ -18,8 +18,8 @@ jobs:
           command: npm run build
       - aws-cli/install
       - run:
-        name: Run Testing Frontend
-        command: npm run test
+          name: Run Testing Frontend
+          command: npm run test
       - run:
           name: Deploying Frontend Project
           command: aws s3 cp --recursive --acl public-read ./www s3://ezzhassan-udagram/

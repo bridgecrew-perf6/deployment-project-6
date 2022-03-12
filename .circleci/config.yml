@@ -5,6 +5,8 @@ orbs:
   aws-elastic-beanstalk: circleci/aws-elastic-beanstalk@2.0.1
 jobs:
   frontend:
+    docker:
+      -image: "cimg/base:stable"
     working_directory: ~/app/udagram/udagram-frontend
     executor: node/default
     steps:
@@ -20,6 +22,8 @@ jobs:
           name: Deploy Frontend
           command: aws s3 cp --recursive --acl public-read ./www s3://ezzhassan-udagram/
   server:
+    docker:
+      -image: "cimg/base:stable"
     working_directory: ~/app/udagram/udagram-api
     executor: node/default
     steps:

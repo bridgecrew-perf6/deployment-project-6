@@ -6,13 +6,13 @@ orbs:
 
 jobs:
   frontend:
-    working_directory: ~/app/udagram-frontend
+    working_directory: ~/app/udagram/udagram-frontend
     executor: node/default
     steps:
       - checkout:
           path: ~/app
       - node/install-packages:
-          app-dir: ~/app/udagram-frontend
+          app-dir: ~/app/udagram/udagram-frontend
       - run:
           name: Building Frontend Project
           command: npm run build
@@ -24,13 +24,13 @@ jobs:
           name: Deploying Frontend Project
           command: aws s3 cp --recursive --acl public-read ./www s3://ezzhassan-udagram/
   server:
-    working_directory: ~/app/udagram-api
+    working_directory: ~/app/udagram/udagram-api
     executor: node/default
     steps:
       - checkout:
           path: ~/app
       - node/install-packages:
-          app-dir: ~/app/udagram-api
+          app-dir: ~/app/udagram/udagram-api
       - run:
           name: Building Server Project
           command: |-

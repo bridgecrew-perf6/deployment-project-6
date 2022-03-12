@@ -28,13 +28,6 @@ jobs:
       - node/install-packages:
           app-dir: ~/app/udagram/udagram-api
       - run:
-          name: Install Linux needed packages
-          command: |-
-            cd www
-            eb init --region us-east-1 --platform node.js udagram
-            eb use udagram-api-dev
-            eb deploy
-      - run:
           name: Build and Archive Server
           command: |-
             npm run build

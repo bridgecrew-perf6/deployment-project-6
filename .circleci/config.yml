@@ -36,10 +36,18 @@ jobs:
           command: |-
             npm run build
       - aws-cli/install
-      - eb/install
+          docker:
+      - image: 'cimg/base:stable'
+    steps:
+      - checkout
+      - eb/setup
       - run:
           name: Deploy Server
-          command: eb deploy udagram-api-dev
+          command: |
+
+            eb deploy udagram-api-dev
+            eb status
+
 
 workflows:
   build_and_deploy:

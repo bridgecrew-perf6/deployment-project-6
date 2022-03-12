@@ -28,24 +28,24 @@ jobs:
   server:
     working_directory: ~/app/udagram/udagram-api
     executor: node/default
-    steps:
-      - checkout:
-          path: ~/app
-      - node/install-packages:
-          app-dir: ~/app/udagram/udagram-api
-      - run:
-          name: Building Server Project
-          command: |-
-            npm run build
-      - aws-cli/install
-    steps:
-      - checkout
-      - eb/setup
-      - run:
-          name: Deploy Server
-          command: |
-            eb deploy udagram-api-dev
-            eb status
+      steps:
+        - checkout:
+            path: ~/app
+        - node/install-packages:
+            app-dir: ~/app/udagram/udagram-api
+        - run:
+            name: Building Server Project
+            command: |-
+              npm run build
+        - aws-cli/install
+      steps:
+        - checkout
+        - eb/setup
+        - run:
+            name: Deploy Server
+            command: |
+              eb deploy udagram-api-dev
+              eb status
 
 
 workflows:

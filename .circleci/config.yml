@@ -35,7 +35,7 @@ jobs:
       - run:
           name: Deploy Server
           command: |-
-            aws s3 cp ./www/Archive.zip ezzhassan-udagram
+            aws s3 cp ./www/Archive.zip s3://ezzhassan-udagram
             aws elasticbeanstalk create-application-version --application-name udagram --version-label <<pipeline.git.revision>> --source-bundle S3Bucket="ezzhassan-udagram",S3Key="Archive.zip"
             aws elasticbeanstalk update-environment --application-name udagram --environment-name udagram-api-dev --version-label <<pipeline.git.revision>>
 

@@ -32,7 +32,6 @@ jobs:
           command: |-
             npm run build
       - aws-cli/install
-      - eb/setup
       - run:
           name: Deploy Server
           command: |-
